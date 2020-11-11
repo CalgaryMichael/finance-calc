@@ -30,6 +30,31 @@ func TestSumActivePayments__AllActive__NoDates(t *testing.T) {
 	}
 }
 
+func TestSumActivePayments__AllActive__NoCarryOver(t *testing.T) {
+	payments := []*DebtPayment{
+		&DebtPayment{
+			Amount:    50.00,
+			CarryOver: false,
+			StartDate: nil,
+			EndDate:   nil,
+		},
+	}
+	debt := Debt{
+		DebtName:     "Jazz",
+		DebtTotal:    0.00,
+		Payments:     payments,
+		InterestRate: 0.00,
+	}
+	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
+
+	actual := debt.SumActivePayments(currentDate)
+	expected := 0.00
+
+	if actual != expected {
+		t.Errorf("Sum of active payments is incorrect. Actual: %.2f; Expected %.2f", actual, expected)
+	}
+}
+
 func TestSumActivePayments__AllActive__WithDates(t *testing.T) {
 	startDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
 	endDate := time.Date(1, time.June, 1, 0, 0, 0, 0, time.UTC)

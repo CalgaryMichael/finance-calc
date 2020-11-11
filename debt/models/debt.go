@@ -12,7 +12,7 @@ type Debt struct {
 func (debt Debt) SumActivePayments(currentDate time.Time) float64 {
 	totalAmount := 0.0
 	for _, payment := range debt.Payments {
-		if payment.IsActive(currentDate) {
+		if payment.IsActive(currentDate) && (debt.DebtTotal > 0 || payment.CarryOver == true) {
 			totalAmount += payment.Amount
 		}
 	}
