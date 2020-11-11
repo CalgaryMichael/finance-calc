@@ -6,7 +6,7 @@ type Debt struct {
 	DebtName     string
 	DebtTotal    float64
 	Payments     []*DebtPayment
-	InterestRate float32
+	InterestRate float64
 }
 
 func (debt Debt) SumActivePayments(currentDate time.Time) float64 {
