@@ -7,7 +7,7 @@ func RefreshDebts(projections []*models.DebtProjection) []*models.Debt {
 	for i, projection := range projections {
 		debts[i] = copyDebt(projection)
 	}
-	return debts
+	return SortSettledDebts(debts)
 }
 
 func copyDebt(projection *models.DebtProjection) *models.Debt {
