@@ -48,7 +48,7 @@ func Test_ProjectDebtsForMonth__MultipleDebts(t *testing.T) {
 		},
 	}
 
-	if reflect.DeepEqual(actual, expected) {
+	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("DebtProjections do not match expected. Actual: %+v; Expected: %+v", actual, expected)
 	}
 }

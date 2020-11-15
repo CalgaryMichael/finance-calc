@@ -9,12 +9,9 @@ import (
 // Calculate debt reduction cycle for the amount of months between the provided dates
 func ProjectDebtsForMonth(debts []*models.Debt, endDate time.Time) []*models.DebtProjection {
 	projections := make([]*models.DebtProjection, len(debts))
-	for _, debt := range debts {
+	for i, debt := range debts {
 		carryOverSum := getCarryOverSum(projections)
-		projections = append(
-			projections,
-			buildProjection(debt, endDate, carryOverSum),
-		)
+		projections[i] = buildProjection(debt, endDate, carryOverSum)
 	}
 	return projections
 }
