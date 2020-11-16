@@ -84,7 +84,7 @@ func Test_BuildProjection(t *testing.T) {
 
 func Test_GetCarryOverSum__NoDebtProjections(t *testing.T) {
 	debts := []*models.DebtProjection{nil, nil}
-	actual := getCarryOverSum(debts)
+	actual := GetCarryOverSum(debts)
 	expected := 0.00
 
 	if actual != expected {
@@ -100,7 +100,7 @@ func Test_GetCarryOverSum__WithDebtProjection__NoCarryOver(t *testing.T) {
 			PaymentSum: 50.00,
 		},
 	}
-	actual := getCarryOverSum(debtProjections)
+	actual := GetCarryOverSum(debtProjections)
 	expected := 0.00
 
 	if actual != expected {
@@ -116,7 +116,7 @@ func Test_GetCarryOverSum__WithDebtProjection__WithCarryOver(t *testing.T) {
 			PaymentSum: 100.00,
 		},
 	}
-	actual := getCarryOverSum(debtProjections)
+	actual := GetCarryOverSum(debtProjections)
 	expected := 55.00
 
 	if actual != expected {

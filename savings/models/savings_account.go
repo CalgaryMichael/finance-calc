@@ -7,7 +7,7 @@ type SavingsAccount struct {
 	APY            float64
 	InitialCapital float64
 	Payments       []*SavingsPayment
-	ProjectedDate  time.Time
+	ProjectedDate  *time.Time
 }
 
 func (account SavingsAccount) SumActivePayments(currentDate time.Time) float64 {
