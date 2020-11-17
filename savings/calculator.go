@@ -24,10 +24,15 @@ func ProjectSavingsForMonth(
 }
 
 func buildProjection(account *models.SavingsAccount, currentDate time.Time, carryOverSum float64) *models.SavingsProjection {
-	payment := account.SumActivePayments(currentDate) + carryOverSum
+	payment := sumPayment(account, currentDate, carryOverSum)
 	return &models.SavingsProjection{
 		SavingsAccount: account,
 		SavingsTotal:   account.InitialCapital + payment,
 		PaymentSum:     payment,
 	}
+}
+
+func sumPayment(account *models.SavingsAccount, currentDate time.Time, carryOverSum float64) float64 {
+	interest := account.InitialCapital * (account.APY / 12)
+	return account.SumActivePayments(currentDate) + carryOverSum + interest
 }

@@ -8,6 +8,41 @@ import (
 	"time"
 )
 
+func Test_ProjectSavingsForMonth__APY(t *testing.T) {
+	payment1 := buildPayment(100.00)
+	accounts := []*models.SavingsAccount{
+		&models.SavingsAccount{
+			Name:           "Jazz 1",
+			APY:            0.12,
+			InitialCapital: 1000.00,
+			Payments:       []*models.SavingsPayment{payment1},
+			ProjectedDate:  nil,
+		},
+	}
+	debtProjections := []*debtModels.DebtProjection{
+		&debtModels.DebtProjection{
+			Debt:       nil,
+			DebtTotal:  1000.00,
+			PaymentSum: 100.00,
+		},
+	}
+	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
+
+	actual := ProjectSavingsForMonth(accounts, debtProjections, currentDate)
+
+	expected := []*models.SavingsProjection{
+		&models.SavingsProjection{
+			SavingsAccount: accounts[0],
+			SavingsTotal:   1110.00,
+			PaymentSum:     110.00,
+		},
+	}
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("SavingsProjections do not match expected. Actual: %+v; Expected: %+v", actual[0], expected[0])
+	}
+}
+
 func Test_ProjectSavingsForMonth__NoCarryOver(t *testing.T) {
 	payment1 := buildPayment(100.00)
 	payment2 := buildPayment(500.00)
