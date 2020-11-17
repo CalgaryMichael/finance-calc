@@ -45,6 +45,9 @@ func Test_RefreshSavingsAccounts__NoChange(t *testing.T) {
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("Savings Account Refreshes don't match. Actual: %+v; Expected %+v", actual, expected)
+		for i, _ := range expected {
+			fmt.Printf("[%b] - Actual: %+v - Expected %+v\n", i, actual[i], expected[i])
+		}
 	}
 }
 
