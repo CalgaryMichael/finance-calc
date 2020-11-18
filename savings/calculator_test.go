@@ -21,7 +21,7 @@ func Test_ProjectSavingsForMonth__APY(t *testing.T) {
 	}
 	debtProjections := []*debtModels.DebtProjection{
 		&debtModels.DebtProjection{
-			Debt:       nil,
+			Debt:       buildDebt(1100.00, 100.00),
 			DebtTotal:  1000.00,
 			PaymentSum: 100.00,
 		},
@@ -64,7 +64,7 @@ func Test_ProjectSavingsForMonth__NoCarryOver(t *testing.T) {
 	}
 	debtProjections := []*debtModels.DebtProjection{
 		&debtModels.DebtProjection{
-			Debt:       nil,
+			Debt:       buildDebt(1100.00, 100.00),
 			DebtTotal:  1000.00,
 			PaymentSum: 100.00,
 		},
@@ -112,9 +112,9 @@ func Test_ProjectSavingsForMonth__WithCarryOver(t *testing.T) {
 	}
 	debtProjections := []*debtModels.DebtProjection{
 		&debtModels.DebtProjection{
-			Debt:       nil,
+			Debt:       buildDebt(50.00, 150.00),
 			DebtTotal:  0.00,
-			PaymentSum: 100.00,
+			PaymentSum: 150.00,
 		},
 	}
 	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
@@ -144,5 +144,22 @@ func buildPayment(amount float64) *models.SavingsPayment {
 		Amount:    amount,
 		StartDate: nil,
 		EndDate:   nil,
+	}
+}
+
+func buildDebt(debtTotal float64, paymentAmount float64) *debtModels.Debt {
+	payments := []*debtModels.DebtPayment{
+		&debtModels.DebtPayment{
+			Amount:    paymentAmount,
+			CarryOver: true,
+			StartDate: nil,
+			EndDate:   nil,
+		},
+	}
+	return &debtModels.Debt{
+		DebtName:     "Jazz",
+		DebtTotal:    debtTotal,
+		Payments:     payments,
+		InterestRate: 0.00,
 	}
 }

@@ -16,7 +16,7 @@ func ProjectSavingsForMonth(
 	for i, account := range accounts {
 		carryOverSum := 0.00
 		if i == 0 {
-			carryOverSum = debt.GetCarryOverSum(debtProjections)
+			carryOverSum = debt.GetCarryOverSum(debtProjections, currentDate)
 		}
 		projections[i] = buildProjection(account, currentDate, carryOverSum)
 	}
