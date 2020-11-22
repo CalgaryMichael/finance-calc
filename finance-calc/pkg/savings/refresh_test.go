@@ -1,7 +1,7 @@
 package savings
 
 import (
-	models "financeCalc/savings/models"
+	models "financeCalc/pkg/savings/models"
 	"fmt"
 	"reflect"
 	"testing"

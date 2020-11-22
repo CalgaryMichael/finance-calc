@@ -1,9 +1,9 @@
 package savings
 
 import (
-	debt "financeCalc/debt"
-	debtModels "financeCalc/debt/models"
-	models "financeCalc/savings/models"
+	debt "financeCalc/pkg/debt"
+	debtModels "financeCalc/pkg/debt/models"
+	models "financeCalc/pkg/savings/models"
 	"time"
 )
 

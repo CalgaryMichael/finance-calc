@@ -1,7 +1,7 @@
 package debt
 
 import (
-	models "financeCalc/debt/models"
+	models "financeCalc/pkg/debt/models"
 	"reflect"
 	"testing"
 	"time"

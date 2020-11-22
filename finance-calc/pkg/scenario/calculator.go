@@ -1,11 +1,11 @@
 package scenario
 
 import (
-	debt "financeCalc/debt"
-	debtModels "financeCalc/debt/models"
-	savings "financeCalc/savings"
-	savingsModels "financeCalc/savings/models"
-	models "financeCalc/scenario/models"
+	debt "financeCalc/pkg/debt"
+	debtModels "financeCalc/pkg/debt/models"
+	savings "financeCalc/pkg/savings"
+	savingsModels "financeCalc/pkg/savings/models"
+	models "financeCalc/pkg/scenario/models"
 	"time"
 )
 

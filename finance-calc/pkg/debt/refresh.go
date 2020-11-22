@@ -1,6 +1,6 @@
 package debt
 
-import models "financeCalc/debt/models"
+import models "financeCalc/pkg/debt/models"
 
 func RefreshDebts(projections []*models.DebtProjection) []*models.Debt {
 	debts := make([]*models.Debt, len(projections))

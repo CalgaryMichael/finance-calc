@@ -1,6 +1,6 @@
 package savings
 
-import models "financeCalc/savings/models"
+import models "financeCalc/pkg/savings/models"
 
 func RefreshSavingsAccounts(projections []*models.SavingsProjection) []*models.SavingsAccount {
 	accounts := make([]*models.SavingsAccount, len(projections))

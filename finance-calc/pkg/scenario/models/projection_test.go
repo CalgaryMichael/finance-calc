@@ -1,8 +1,8 @@
 package scenario
 
 import (
-	debtModels "financeCalc/debt/models"
-	savingsModels "financeCalc/savings/models"
+	debtModels "financeCalc/pkg/debt/models"
+	savingsModels "financeCalc/pkg/savings/models"
 	"testing"
 	"time"
 )
