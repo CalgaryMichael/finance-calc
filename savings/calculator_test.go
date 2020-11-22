@@ -21,9 +21,10 @@ func Test_ProjectSavingsForMonth__APY(t *testing.T) {
 	}
 	debtProjections := []*debtModels.DebtProjection{
 		&debtModels.DebtProjection{
-			Debt:       buildDebt(1100.00, 100.00),
-			DebtTotal:  1000.00,
-			PaymentSum: 100.00,
+			Debt:         buildDebt(1100.00, 100.00),
+			DebtTotal:    1000.00,
+			PaymentSum:   100.00,
+			UnappliedSum: 0.00,
 		},
 	}
 	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
@@ -64,9 +65,10 @@ func Test_ProjectSavingsForMonth__NoCarryOver(t *testing.T) {
 	}
 	debtProjections := []*debtModels.DebtProjection{
 		&debtModels.DebtProjection{
-			Debt:       buildDebt(1100.00, 100.00),
-			DebtTotal:  1000.00,
-			PaymentSum: 100.00,
+			Debt:         buildDebt(1100.00, 100.00),
+			DebtTotal:    1000.00,
+			PaymentSum:   100.00,
+			UnappliedSum: 0.00,
 		},
 	}
 	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
@@ -112,9 +114,10 @@ func Test_ProjectSavingsForMonth__WithCarryOver(t *testing.T) {
 	}
 	debtProjections := []*debtModels.DebtProjection{
 		&debtModels.DebtProjection{
-			Debt:       buildDebt(50.00, 150.00),
-			DebtTotal:  0.00,
-			PaymentSum: 150.00,
+			Debt:         buildDebt(50.00, 150.00),
+			DebtTotal:    0.00,
+			PaymentSum:   50.00,
+			UnappliedSum: 100.00,
 		},
 	}
 	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)

@@ -37,14 +37,77 @@ func Test_ProjectDebtsForMonth__MultipleDebts(t *testing.T) {
 	actual := ProjectDebtsForMonth(debts, currentDate)
 	expected := []*models.DebtProjection{
 		&models.DebtProjection{
-			Debt:       debt1,
-			DebtTotal:  50.00,
-			PaymentSum: 50.00,
+			Debt:         debt1,
+			DebtTotal:    50.00,
+			PaymentSum:   50.00,
+			UnappliedSum: 0.00,
 		},
 		&models.DebtProjection{
-			Debt:       debt2,
-			DebtTotal:  150.00,
-			PaymentSum: 50.00,
+			Debt:         debt2,
+			DebtTotal:    150.00,
+			PaymentSum:   50.00,
+			UnappliedSum: 0.00,
+		},
+	}
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("DebtProjections do not match expected. Actual: %+v; Expected: %+v", actual, expected)
+	}
+}
+
+func Test_ProjectDebtsForMonth__MultipleDebts__CarryOver(t *testing.T) {
+	payments := []*models.DebtPayment{
+		&models.DebtPayment{
+			Amount:    50.00,
+			CarryOver: true,
+			StartDate: nil,
+			EndDate:   nil,
+		},
+	}
+	debt1 := &models.Debt{
+		DebtName:     "Jazz 1",
+		DebtTotal:    10.00,
+		Payments:     payments,
+		InterestRate: 0.00,
+	}
+	debt2 := &models.Debt{
+		DebtName:     "Jazz 2",
+		DebtTotal:    100.00,
+		Payments:     payments,
+		InterestRate: 0.00,
+	}
+	debt3 := &models.Debt{
+		DebtName:     "Jazz 3",
+		DebtTotal:    200.00,
+		Payments:     payments,
+		InterestRate: 0.00,
+	}
+	debts := []*models.Debt{
+		debt1,
+		debt2,
+		debt3,
+	}
+	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
+
+	actual := ProjectDebtsForMonth(debts, currentDate)
+	expected := []*models.DebtProjection{
+		&models.DebtProjection{
+			Debt:         debt1,
+			DebtTotal:    0.00,
+			PaymentSum:   10.00,
+			UnappliedSum: 40.00,
+		},
+		&models.DebtProjection{
+			Debt:         debt2,
+			DebtTotal:    10.00,
+			PaymentSum:   90.00,
+			UnappliedSum: 0.00,
+		},
+		&models.DebtProjection{
+			Debt:         debt3,
+			DebtTotal:    150.00,
+			PaymentSum:   50.00,
+			UnappliedSum: 0.00,
 		},
 	}
 
@@ -72,9 +135,10 @@ func Test_BuildProjection(t *testing.T) {
 
 	actual := buildProjection(debt, currentDate, 15.00)
 	expected := models.DebtProjection{
-		Debt:       debt,
-		DebtTotal:  35.00,
-		PaymentSum: 65.00,
+		Debt:         debt,
+		DebtTotal:    35.00,
+		PaymentSum:   65.00,
+		UnappliedSum: 0.00,
 	}
 
 	if *actual != expected {
@@ -83,10 +147,9 @@ func Test_BuildProjection(t *testing.T) {
 }
 
 func Test_GetCarryOverSum__NoDebtProjections(t *testing.T) {
-	debts := []*models.DebtProjection{nil, nil}
-	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
+	debtProjections := []*models.DebtProjection{nil, nil}
 
-	actual := GetCarryOverSum(debts, currentDate)
+	actual := GetCarryOverSum(debtProjections)
 	expected := 0.00
 
 	if actual != expected {
@@ -111,14 +174,14 @@ func Test_GetCarryOverSum__WithDebtProjection__NoCarryOver(t *testing.T) {
 	}
 	debtProjections := []*models.DebtProjection{
 		&models.DebtProjection{
-			Debt:       debt,
-			DebtTotal:  50.00,
-			PaymentSum: 50.00,
+			Debt:         debt,
+			DebtTotal:    50.00,
+			PaymentSum:   50.00,
+			UnappliedSum: 0.00,
 		},
 	}
-	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
 
-	actual := GetCarryOverSum(debtProjections, currentDate)
+	actual := GetCarryOverSum(debtProjections)
 	expected := 0.00
 
 	if actual != expected {
@@ -149,19 +212,20 @@ func Test_GetCarryOverSum__WithDebtProjection__WithCarryOver(t *testing.T) {
 	}
 	debtProjections := []*models.DebtProjection{
 		&models.DebtProjection{
-			Debt:       debt1,
-			DebtTotal:  0.00,
-			PaymentSum: 0.00,
+			Debt:         debt1,
+			DebtTotal:    0.00,
+			PaymentSum:   0.00,
+			UnappliedSum: 50.00,
 		},
 		&models.DebtProjection{
-			Debt:       debt2,
-			DebtTotal:  0.00,
-			PaymentSum: 100.00,
+			Debt:         debt2,
+			DebtTotal:    0.00,
+			PaymentSum:   50.00,
+			UnappliedSum: 50.00,
 		},
 	}
-	currentDate := time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC)
 
-	actual := GetCarryOverSum(debtProjections, currentDate)
+	actual := GetCarryOverSum(debtProjections)
 	expected := 50.00
 
 	if actual != expected {
