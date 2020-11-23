@@ -3,9 +3,9 @@ package savings
 import "time"
 
 type SavingsPayment struct {
-	Amount    float64
-	StartDate *time.Time
-	EndDate   *time.Time
+	Amount    float64    `json:"amount"`
+	StartDate *time.Time `json:"startDate"`
+	EndDate   *time.Time `json:"endDate"`
 }
 
 func (payment SavingsPayment) IsActive(currentDate time.Time) bool {

@@ -2,8 +2,8 @@ package debt
 
 type DebtProjection struct {
 	Debt         *Debt
-	DebtTotal    float64
-	PaymentSum   float64
+	DebtTotal    float64 `json:"debtTotal"`
+	PaymentSum   float64 `json:"paymentSum"`
 	UnappliedSum float64
 }
 

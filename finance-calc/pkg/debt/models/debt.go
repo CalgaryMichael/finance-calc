@@ -3,10 +3,10 @@ package debt
 import "time"
 
 type Debt struct {
-	DebtName     string
-	DebtTotal    float64
-	Payments     []*DebtPayment
-	InterestRate float64
+	DebtName     string         `json:"name"`
+	DebtTotal    float64        `json:"total"`
+	Payments     []*DebtPayment `json:"payments"`
+	InterestRate float64        `json:"interestRate"`
 }
 
 func (debt Debt) IsSettled() bool {

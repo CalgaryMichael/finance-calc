@@ -3,10 +3,10 @@ package debt
 import "time"
 
 type DebtPayment struct {
-	Amount    float64
-	CarryOver bool
-	StartDate *time.Time
-	EndDate   *time.Time
+	Amount    float64    `json:"amount"`
+	CarryOver bool       `json:"carryOver"`
+	StartDate *time.Time `json:"startDate"`
+	EndDate   *time.Time `json:"endDate"`
 }
 
 func (debtPayment DebtPayment) IsActive(currentDate time.Time) bool {

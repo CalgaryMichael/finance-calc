@@ -3,11 +3,11 @@ package savings
 import "time"
 
 type SavingsAccount struct {
-	Name           string
-	APY            float64
-	InitialCapital float64
-	Payments       []*SavingsPayment
-	ProjectedDate  *time.Time
+	Name           string            `json:"name"`
+	APY            float64           `json:"apy"`
+	InitialCapital float64           `json:"initialCapital"`
+	Payments       []*SavingsPayment `json:"paymemnts"`
+	ProjectedDate  *time.Time        `json:"projectedDate"`
 }
 
 func (account SavingsAccount) SumActivePayments(currentDate time.Time) float64 {

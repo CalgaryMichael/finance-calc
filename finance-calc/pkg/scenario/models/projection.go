@@ -7,9 +7,9 @@ import (
 )
 
 type Projection struct {
-	EffectiveDate      time.Time
-	DebtProjections    []*debtModels.DebtProjection
-	SavingsProjections []*savingsModels.SavingsProjection
+	EffectiveDate      time.Time                          `json:"effectiveDate"`
+	DebtProjections    []*debtModels.DebtProjection       `json:"debtProjections"`
+	SavingsProjections []*savingsModels.SavingsProjection `json:"savingsProjections"`
 }
 
 func (projection Projection) OutstandingDebt() bool {
