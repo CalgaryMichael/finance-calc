@@ -166,6 +166,44 @@ func Test_SortDebts__RespectsSortKey__Payments(t *testing.T) {
 	}
 }
 
+func Test_SortDebts__RespectsReversed(t *testing.T) {
+	payments := []*models.DebtPayment{
+		&models.DebtPayment{
+			Amount:    50.00,
+			CarryOver: true,
+			StartDate: nil,
+			EndDate:   nil,
+		},
+	}
+	debt1 := &models.Debt{
+		DebtName:     "DEF",
+		DebtTotal:    100.00,
+		Payments:     payments,
+		InterestRate: 0.00,
+	}
+	debt2 := &models.Debt{
+		DebtName:     "ABC",
+		DebtTotal:    100.00,
+		Payments:     payments,
+		InterestRate: 0.00,
+	}
+	debts := []*models.Debt{
+		debt2,
+		debt1,
+	}
+
+	actual := SortDebts(debts, "DebtName", true)
+
+	expected := []*models.Debt{
+		debt1,
+		debt2,
+	}
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("Debt Refreshes don't match. Actual: %+v; Expected %+v", actual, expected)
+	}
+}
+
 func Test_SortSettledDebts__SettledOnTop(t *testing.T) {
 	payments := []*models.DebtPayment{
 		&models.DebtPayment{

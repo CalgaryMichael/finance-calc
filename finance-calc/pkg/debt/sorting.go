@@ -41,5 +41,6 @@ func cmpDebts(first *models.Debt, second *models.Debt, key string, reverse bool)
 	default:
 		comparison = first.DebtTotal < second.DebtTotal
 	}
-	return comparison
+
+	return (comparison && !reverse) || (!comparison && reverse)
 }
