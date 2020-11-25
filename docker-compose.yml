@@ -1,0 +1,9 @@
+version: '3'
+services:
+  finance-calc-api:
+    build:
+      context: finance-calc/
+      dockerfile: build/Dockerfile
+    ports:
+      - "3000:3000"
+
