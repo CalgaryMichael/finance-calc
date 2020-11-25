@@ -6,7 +6,7 @@ type SavingsAccount struct {
 	Name           string            `json:"name"`
 	APY            float64           `json:"apy"`
 	InitialCapital float64           `json:"initialCapital"`
-	Payments       []*SavingsPayment `json:"paymemnts"`
+	Payments       []*SavingsPayment `json:"payments"`
 	ProjectedDate  *time.Time        `json:"projectedDate"`
 }
 

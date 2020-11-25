@@ -6,6 +6,7 @@ import (
 	savings "financeCalc/pkg/savings"
 	savingsModels "financeCalc/pkg/savings/models"
 	models "financeCalc/pkg/scenario/models"
+	"log"
 	"time"
 )
 
@@ -32,6 +33,8 @@ func BuildProjections(scenario models.Scenario, key string, reverse bool) []*mod
 		savingsAccounts = savings.RefreshSavingsAccounts(projection.SavingsProjections)
 		i = i + 1
 	}
+
+	log.Println("Finished building projections!")
 	return projections
 }
 
@@ -40,6 +43,8 @@ func buildProjection(
 	debts []*debtModels.Debt,
 	savingsAccounts []*savingsModels.SavingsAccount,
 ) *models.Projection {
+	log.Printf("Building projections for month: %v\n", effectiveDate.Format(time.RFC3339))
+
 	debtProjections := debt.ProjectDebtsForMonth(debts, effectiveDate)
 	savingsProjections := savings.ProjectSavingsForMonth(savingsAccounts, debtProjections, effectiveDate)
 

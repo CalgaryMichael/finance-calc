@@ -9,5 +9,5 @@ import (
 type Scenario struct {
 	StartDate       time.Time                       `json:"startDate"`
 	Debts           []*debtModels.Debt              `json:"debts"`
-	SavingsAccounts []*savingsModels.SavingsAccount `json:"savingsAccounts"`
+	SavingsAccounts []*savingsModels.SavingsAccount `json:"savings"`
 }
