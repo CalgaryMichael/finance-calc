@@ -4,8 +4,23 @@ import (
 	"log"
 	"net/http"
 
-	mux "github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 )
+
+var allowedHeaders []string = []string{
+	"X-Requested-With",
+	"Content-Type",
+	"Authorization",
+}
+
+var allowedMethods []string = []string{
+	"GET",
+	"POST",
+	"PUT",
+	"HEAD",
+	"OPTIONS",
+}
 
 type MuxRouteFunc func(http.ResponseWriter, *http.Request)
 
@@ -21,5 +36,10 @@ func StartServer() {
 	r := mux.NewRouter()
 	r.HandleFunc("/project", requestLogger(projectScenario)).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":3000", r))
+	cors := handlers.CORS(
+		handlers.AllowedHeaders(allowedHeaders),
+		handlers.AllowedMethods(allowedMethods),
+		handlers.AllowedOrigins([]string{"*"}),
+	)
+	log.Fatal(http.ListenAndServe(":3000", cors(r)))
 }
