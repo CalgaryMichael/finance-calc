@@ -7,6 +7,8 @@ import { State } from "./types.d";
 import * as Actions from "./store/action-creators";
 
 const App: React.FC = (props) => {
+  const projections: readonly object[] = useSelector((state: State) => state.projections);
+
   const dispatch: Dispatch<any> = useDispatch();
 
   const updateScenario = React.useCallback(
@@ -21,6 +23,7 @@ const App: React.FC = (props) => {
 
   return (
     <HomePage
+      projections={projections}
       updateScenario={updateScenario}
       saveScenario={saveScenario}
     />

@@ -22,7 +22,14 @@ export function saveScenario() {
       reverse: true,
     };
     axios.post(`${Settings.API_BASE}/project`, payload)
-      .then(() => console.log("cool"))
+      .then((ret) => {
+        dispatch({
+          type: ActionType.SAVE_PROJECTIONS,
+          payload: {
+            projections: ret.data.projections
+          }
+        });
+      })
       .catch(() => console.log("not cool"));
   };
 }

@@ -2,6 +2,7 @@ import React from "react";
 
 
 type Props = {
+  projections: object[],
   updateScenario: (scenario: any) => void,
   saveScenario: () => void
 }
@@ -24,6 +25,9 @@ const HomePage: React.FC = (props: Props) => {
         />
       </div>
       <button onClick={saveScenario}>Submit</button>
+      <div>
+        <pre>{ JSON.stringify(props.projections, null, 2) }</pre>
+      </div>
     </div>
   );
 };

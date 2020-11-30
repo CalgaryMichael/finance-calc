@@ -3,7 +3,8 @@
 //}
 
 export type State = {
-  scenario: any
+  scenario: any,
+  projections: Array<object>
 }
 
 export type Action = {
