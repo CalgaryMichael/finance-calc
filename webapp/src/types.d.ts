@@ -1,14 +1,14 @@
-interface IScenario {
-  startDate: string
-}
+//interface IScenario {
+//  startDate: string
+//}
 
 export type State = {
-  //scenario: IScenario
-  testValue: string
+  scenario: any
 }
 
 export type Action = {
-  type: string
+  type: string,
+  payload: object
 }
 
 export type DispatchType = (args: Action) => Action

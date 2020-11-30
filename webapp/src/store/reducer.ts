@@ -2,7 +2,7 @@ import * as ActionType from "./action-types";
 import { Action, State } from "../types.d";
 
 const initialState: State = {
-  testValue: "off"
+  scenario: ''
 };
 
 const reducer = (
@@ -10,11 +10,12 @@ const reducer = (
   action: Action
 ): State => {
   switch (action.type) {
-    case ActionType.TEST:
-      return {...state, testValue: "on"};
+    case ActionType.UPDATE_SCENARIO:
+      return {...state, ...action.payload};
+    default:
+      console.log(`Unable to reduce action ${action.type}`);
+      return state;
   }
-
-  return state;
 };
 
 export default reducer;

@@ -4,20 +4,27 @@ import { Dispatch } from "redux"
 
 import HomePage from "./views/home-page";
 import { State } from "./types.d";
-import { runTest } from "./store/action-creators";
+import * as Actions from "./store/action-creators";
 
 const App: React.FC = (props) => {
-  const testValue: string = useSelector((state: State) => state.testValue);
-
   const dispatch: Dispatch<any> = useDispatch();
 
-  const test = React.useCallback(
-    () => dispatch(runTest()),
+  const updateScenario = React.useCallback(
+    (scenario: any) => dispatch(Actions.updateScenario(scenario)),
     [dispatch]
   );
 
-  return <HomePage test={test} testValue={testValue} />;
+  const saveScenario = React.useCallback(
+    () => dispatch(Actions.saveScenario()),
+    [dispatch]
+  );
+
+  return (
+    <HomePage
+      updateScenario={updateScenario}
+      saveScenario={saveScenario}
+    />
+  );
 };
 
 export default App;
-

@@ -1,2 +1,1 @@
-export const TEST = "test";
-
+export const UPDATE_SCENARIO = "UPDATE_SCENARIO";
