@@ -15,7 +15,11 @@ func projectScenario(w http.ResponseWriter, req *http.Request) {
 		scenarioRequest.ReverseSort,
 	)
 
+	response := ScenarioResponse{
+		Projections: projections,
+	}
+
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(projections)
+	json.NewEncoder(w).Encode(response)
 	return
 }

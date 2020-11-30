@@ -22,3 +22,7 @@ func NewScenarioRequest(r io.ReadCloser) ScenarioRequest {
 	}
 	return scenarioRequest
 }
+
+type ScenarioResponse struct {
+	Projections []*scenarioModels.Projection `json:"projections"`
+}
