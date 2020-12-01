@@ -2,13 +2,13 @@ import axios from "axios";
 
 import * as ActionType from "./action-types";
 import * as Settings from "../settings";
-import { DispatchType, Projection, State } from "../types.d";
+import { DispatchType, Projection, Scenario, State } from "../types.d";
 
 export function updateScenario(scenario: any) {
   return (dispatch: DispatchType) => {
     dispatch({
       type: ActionType.UPDATE_SCENARIO,
-      payload: { scenario }
+      payload: { scenario: scenario as Scenario }
     });
   };
 }

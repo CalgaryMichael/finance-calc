@@ -2,7 +2,7 @@ import * as ActionType from "./action-types";
 import { Action, State } from "../types.d";
 
 const initialState: State = {
-  scenario: '',
+  scenario: null,
   projections: []
 };
 

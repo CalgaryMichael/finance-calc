@@ -1,7 +1,8 @@
 import { Projection } from "./projection";
+import { Scenario } from "./scenario";
 
 export type State = {
-  scenario: any,
+  scenario: Scenario,
   projections: Array<Projection>
 }
 
