@@ -1,8 +1,10 @@
 import React from "react";
 
+import { Projection } from "./types.d";
+
 
 type Props = {
-  projections: object[],
+  projections: Array<Projection>
   updateScenario: (scenario: any) => void,
   saveScenario: () => void
 }

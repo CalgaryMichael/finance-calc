@@ -2,7 +2,7 @@ import axios from "axios";
 
 import * as ActionType from "./action-types";
 import * as Settings from "../settings";
-import { DispatchType, State } from "../types.d";
+import { DispatchType, Projection, State } from "../types.d";
 
 export function updateScenario(scenario: any) {
   return (dispatch: DispatchType) => {
@@ -26,7 +26,7 @@ export function saveScenario() {
         dispatch({
           type: ActionType.SAVE_PROJECTIONS,
           payload: {
-            projections: ret.data.projections
+            projections: ret.data.projections as Array<Projection>
           }
         });
       })
