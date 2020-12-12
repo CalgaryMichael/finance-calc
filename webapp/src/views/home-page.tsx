@@ -23,19 +23,13 @@ const HomePage: React.FC = (props: Props) => {
   return (
     <div>
       <div>
-        <textarea
-          onBlur={updateScenario}
-        />
+        <textarea onBlur={updateScenario} />
       </div>
       <button onClick={saveScenario}>Submit</button>
-      <div>
-        <ProjectionsTotalLineChart
-          projections={props.projections}
-        />
-        <pre>{ JSON.stringify(props.projections, null, 2) }</pre>
-      </div>
+      <ProjectionsTotalLineChart projections={props.projections} />
     </div>
   );
 };
 
 export default HomePage;
+

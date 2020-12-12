@@ -6,4 +6,12 @@ services:
       dockerfile: build/Dockerfile
     ports:
       - "3000:3000"
+  finance-calc-webapp:
+    build:
+      context: webapp/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:5000"
+    depends_on:
+      - finance-calc-api
 
