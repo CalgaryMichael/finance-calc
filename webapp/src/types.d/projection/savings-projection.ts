@@ -1,4 +1,4 @@
-export type SavingsProjection = {
-  savingsTotal: float,
-  paymentSum: float
+export interface SavingsProjection {
+  savingsTotal: float;
+  paymentSum: float;
 }

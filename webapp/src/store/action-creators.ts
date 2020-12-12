@@ -1,6 +1,6 @@
 import * as ActionType from "./action-types";
 import * as external from "../external";
-import { DispatchType, Projection, Scenario, State } from "../types.d";
+import { buildProjections, DispatchType, Scenario, State } from "../types.d";
 
 export function updateScenario(scenario: any) {
   return (dispatch: DispatchType) => {
@@ -19,11 +19,11 @@ export function saveScenario() {
         dispatch({
           type: ActionType.SAVE_PROJECTIONS,
           payload: {
-            projections: ret.data.projections as Array<Projection>
+            projections: buildProjections(ret.data.projections)
           }
         });
       })
-      .catch(() => console.log("not cool"));
+      .catch((e) => console.log(e));
   };
 }
 

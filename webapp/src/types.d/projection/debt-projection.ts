@@ -1,5 +1,5 @@
-export type DebtProjection = {
-  debtTotal: float,
-  paymentSum: float
+export interface DebtProjection {
+  debtTotal: float;
+  paymentSum: float;
 }
 
