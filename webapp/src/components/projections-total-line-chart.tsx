@@ -30,7 +30,12 @@ const ProjectionsTotalLineChart: React.FC = (props: Props) => {
         <XAxis dataKey="date" minTickGap={30} />
         <YAxis />
         <CartesianGrid stroke="#ccc" />
-        <Tooltip />
+        <Tooltip
+          formatter={(value, name, props) => {
+            const formattedCurrency = Number(value).toLocaleString("en-US", { maximumFractionDigits: 2 });
+            return [`$${formattedCurrency}`, name];
+          }}
+        />
       </LineChart>
     </div>
   );
