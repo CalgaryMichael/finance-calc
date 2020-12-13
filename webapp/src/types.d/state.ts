@@ -3,6 +3,8 @@ import { Scenario } from "./scenario";
 
 export type State = {
   scenario: Scenario,
-  projections: Array<Projection>
+  projections: Array<Projection>,
+  sortKey: string,
+  reverse: boolean
 }
 
