@@ -19,3 +19,9 @@ func (account SavingsAccount) SumActivePayments(currentDate time.Time) float64 {
 	}
 	return totalAmount
 }
+
+func (account SavingsAccount) SatisfiesProjection(currentDate time.Time) bool {
+	return (account.ProjectedDate == nil ||
+		currentDate.Equal(*account.ProjectedDate) ||
+		currentDate.After(*account.ProjectedDate))
+}

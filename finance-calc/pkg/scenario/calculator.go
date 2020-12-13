@@ -25,7 +25,7 @@ func BuildProjections(scenario models.Scenario, key string, reverse bool) []*mod
 			savingsAccounts,
 		)
 		projections = append(projections, projection)
-		if !projection.OutstandingDebt() {
+		if !projection.OutstandingDebt() && !savings.OutstandingSavingsProjections(savingsAccounts, effectiveDate) {
 			break
 		}
 

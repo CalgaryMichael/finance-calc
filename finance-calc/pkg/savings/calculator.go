@@ -39,3 +39,12 @@ func sumPayment(account *models.SavingsAccount, currentDate time.Time, carryOver
 	interest := account.InitialCapital * (account.APY / 12)
 	return account.SumActivePayments(currentDate) + carryOverSum + interest
 }
+
+func OutstandingSavingsProjections(savingsAccounts []*models.SavingsAccount, currentDate time.Time) bool {
+	for _, savingsAccount := range savingsAccounts {
+		if !savingsAccount.SatisfiesProjection(currentDate) {
+			return true
+		}
+	}
+	return false
+}
