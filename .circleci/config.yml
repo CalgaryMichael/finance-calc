@@ -19,8 +19,9 @@ jobs:
             go get -v -t -d ./...
 
       - save_cache:
-          keys:
-            - pkg-v1-{{ checksum "finance-calc/go.mod" }}
+          paths:
+            - /opt/circleci/.go-pkg
+          key: pkg-v1-{{ checksum "finance-calc/go.mod" }}
 
       - run:
           name: run tests
