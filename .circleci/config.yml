@@ -49,7 +49,7 @@ jobs:
               DOCKER_TAG="$DOCKER_TAG,latest"
             fi
             echo "Docker tag: $DOCKER_TAG"
-            IFS="," read -ra DOCKER_TAGS <<< "$DOCKER_TAG"
+            IFS="," read -ra DOCKER_TAGS \<<< "$DOCKER_TAG"
             for tag in "${DOCKER_TAGS[@]}"; do
               echo "${tag}"
             done
