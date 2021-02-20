@@ -5,12 +5,11 @@ jobs:
       # specify the version
       - image: circleci/golang:1.14
 
-    working_directory: /go/src/github.com/calgarymichael/finance-calc/finance-calc
+    working_directory: /go/src/github.com/calgarymichael/finance-calc
     steps:
       - checkout
+      - run: cd finance-calc
 
-      # specify any bash command here prefixed with `run: `
-      - run: ls
       - run: go get -v -t -d ./...
       - run: go test -v ./...
 
