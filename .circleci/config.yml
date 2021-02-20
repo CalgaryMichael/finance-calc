@@ -2,16 +2,23 @@ version: 2.1
 jobs:
   test-backend:
     docker:
-      # specify the version
       - image: circleci/golang:1.14
 
     working_directory: /go/src/github.com/calgarymichael/finance-calc
     steps:
       - checkout
-      - run: cd finance-calc
 
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run:
+          name: download package(s)
+          command: |
+            cd finance-calc
+            go get -v -t -d ./...
+
+      - run:
+          name: run tests
+          command: |
+            cd finance-calc
+            go test -v ./...
 
 
 workflows:
