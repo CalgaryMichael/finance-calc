@@ -37,6 +37,7 @@ jobs:
   build-backend:
     executor: docker/docker
     steps:
+      - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
@@ -47,6 +48,10 @@ jobs:
       - docker/push:
           image: calgarymichael/finance-calc-backend
           tag: $CIRCLE_BRANCH
+          digest-path: /tmp/digest.txt
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
 
 
 workflows:
