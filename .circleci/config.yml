@@ -49,10 +49,6 @@ jobs:
               DOCKER_TAG="$DOCKER_TAG,latest"
             fi
             echo "Docker tag: $DOCKER_TAG"
-            IFS="," read -ra DOCKER_TAGS \<<< "$DOCKER_TAG"
-            for tag in "${DOCKER_TAGS[@]}"; do
-              echo "${tag}"
-            done
             export $DOCKER_TAG
 
       - docker/check
@@ -66,12 +62,6 @@ jobs:
       - docker/push:
           image: calgarymichael/finance-calc-backend
           tag: $DOCKER_TAG
-          digest-path: /tmp/digest.txt
-
-      - run:
-          name: Print digest
-          command: |
-            echo "Digest is: $(</tmp/digest.txt)"
 
 
 workflows:
