@@ -38,17 +38,32 @@ jobs:
     executor: docker/docker
     steps:
       - setup_remote_docker
+
       - checkout
+
+      - run:
+          name: Build Docker tag
+          command: |
+            DOCKER_TAG = $CIRCLE_BRANCH
+            if [ "main" == $CIRCLE_BRANCH ]; then
+              DOCKER_TAG = "latest"
+            fi
+            echo "Docker tag: $DOCKER_TAG"
+            export $DOCKER_TAG
+
       - docker/check
+
       - docker/build:
           image: calgarymichael/finance-calc-backend
-          tag: $CIRCLE_BRANCH
+          tag: $DOCKER_TAG
           path: ./finance-calc/build
           docker-context: ./finance-calc
+
       - docker/push:
           image: calgarymichael/finance-calc-backend
-          tag: $CIRCLE_BRANCH
+          tag: $DOCKER_TAG
           digest-path: /tmp/digest.txt
+
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
