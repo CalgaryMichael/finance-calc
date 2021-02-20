@@ -55,16 +55,17 @@ jobs:
 
       - docker/build:
           image: calgarymichael/finance-calc-backend
-          tag: DOCKER_TAG
+          tag: $DOCKER_TAG
           path: ./finance-calc/build
           docker-context: ./finance-calc
 
       - docker/push:
           image: calgarymichael/finance-calc-backend
-          tag: DOCKER_TAG
+          tag: $DOCKER_TAG
           digest-path: /tmp/digest.txt
 
       - run:
+          name: Print digest
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
 
