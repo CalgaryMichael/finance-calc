@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  docker: circleci/docker@1.5.0
+
 jobs:
   test-backend:
     docker:
@@ -30,8 +34,26 @@ jobs:
             go test -v ./...
 
 
+  build-backend:
+    executor: docker/docker
+    steps:
+      - checkout
+      - docker/check
+      - docker/build:
+          image: calgarymichael/finance-calc-backend
+          tag: $CIRCLE_BRANCH
+          path: ./finance-calc/build
+          docker-context: ./finance-calc
+      - docker/push:
+          image: calgarymichael/finance-calc-backend
+          tag: $CIRCLE_BRANCH
+
+
 workflows:
   test-and-build:
     jobs:
       - test-backend
+      - build-backend:
+          requires:
+            - test-backend
 
