@@ -44,9 +44,9 @@ jobs:
       - run:
           name: Build Docker tag
           command: |
-            DOCKER_TAG = $CIRCLE_BRANCH
+            DOCKER_TAG=$CIRCLE_BRANCH
             if [ "main" == $CIRCLE_BRANCH ]; then
-              DOCKER_TAG = "latest"
+              DOCKER_TAG="latest"
             fi
             echo "Docker tag: $DOCKER_TAG"
             export $DOCKER_TAG
