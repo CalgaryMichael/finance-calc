@@ -8,11 +8,19 @@ jobs:
     steps:
       - checkout
 
+      - restore_cache:
+          keys:
+            - pkg-v1-{{ checksum "finance-calc/go.mod" }}
+
       - run:
           name: download package(s)
           command: |
             cd finance-calc
             go get -v -t -d ./...
+
+      - save_cache:
+          keys:
+            - pkg-v1-{{ checksum "finance-calc/go.mod" }}
 
       - run:
           name: run tests
