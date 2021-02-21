@@ -65,11 +65,12 @@ jobs:
       - docker/push:
           image: calgarymichael/finance-calc-backend
           tag: $(</tmp/docker-tag.txt)
-          digest-path: /tmp/docker-digest.txt
+          digest-path: /tmp/digest.txt
 
       - run:
           name: Print digest
-          command: echo "Digest is: $(</tmp/digest.txt)"
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
 
 
 workflows:
