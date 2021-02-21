@@ -49,7 +49,7 @@ jobs:
               DOCKER_TAG="$DOCKER_TAG,latest"
             fi
             echo "Docker tag: $DOCKER_TAG"
-            export $DOCKER_TAG
+            echo 'export DOCKER_TAG=$DOCKER_TAG' >> $BASH_ENV
 
       - run: echo $DOCKER_TAG
 
