@@ -3,6 +3,23 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.5.0
 
+commands:
+  build-docker-tag:
+    parameters:
+      output:
+        type: string
+    steps:
+      - run:
+          name: Build Docker tag
+          command: |
+            DOCKER_TAG=$CIRCLE_BRANCH
+            if [ "main" == $CIRCLE_BRANCH ]; then
+              DOCKER_TAG="$DOCKER_TAG,latest"
+            fi
+
+            echo $DOCKER_TAG > << parameters.output >>
+            echo "Docker tag: $DOCKER_TAG"
+
 jobs:
   test-backend:
     docker:
@@ -41,30 +58,49 @@ jobs:
 
       - checkout
 
-      - run:
-          name: Build Docker tag
-          command: |
-            DOCKER_TAG=$CIRCLE_BRANCH
-            if [ "main" == $CIRCLE_BRANCH ]; then
-              DOCKER_TAG="$DOCKER_TAG,latest"
-            fi
-
-            echo $DOCKER_TAG > /tmp/docker-tag.txt
-            echo "Docker tag: $DOCKER_TAG"
-
-      - run: echo ${DOCKER_TAG}
-
+      - build-docker-tag:
+          output: /tmp/docker-tag-backend.txt
+      
       - docker/check
 
       - docker/build:
           image: calgarymichael/finance-calc-backend
-          tag: $(</tmp/docker-tag.txt)
+          tag: $(</tmp/docker-tag-backend.txt)
           path: ./finance-calc/build
           docker-context: ./finance-calc
 
       - docker/push:
           image: calgarymichael/finance-calc-backend
-          tag: $(</tmp/docker-tag.txt)
+          tag: $(</tmp/docker-tag-backend.txt)
+          digest-path: /tmp/digest.txt
+
+      - run:
+          name: Print digest
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
+
+
+  build-frontend:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+
+      - checkout
+
+      - build-docker-tag:
+          output: /tmp/docker-tag-frontend.txt
+
+      - docker/check
+
+      - docker/build:
+          image: calgarymichael/finance-calc-frontend
+          tag: $(</tmp/docker-tag-frontend.txt)
+          path: ./webapp
+          docker-context: ./webapp
+
+      - docker/push:
+          image: calgarymichael/finance-calc-frontend
+          tag: $(</tmp/docker-tag-frontend.txt)
           digest-path: /tmp/digest.txt
 
       - run:
