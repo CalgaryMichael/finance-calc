@@ -51,6 +51,8 @@ jobs:
             echo "Docker tag: $DOCKER_TAG"
             export DOCKER_TAG
 
+      - run: echo $DOCKER_TAG
+
       - docker/check
 
       - docker/build:
