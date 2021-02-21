@@ -48,9 +48,9 @@ jobs:
             if [ "main" == $CIRCLE_BRANCH ]; then
               DOCKER_TAG="$DOCKER_TAG,latest"
             fi
+
+            echo $DOCKER_TAG > /tmp/docker-tag.txt
             echo "Docker tag: $DOCKER_TAG"
-            echo 'export DOCKER_TAG=${DOCKER_TAG}' >> $BASH_ENV
-            source $BASH_ENV
 
       - run: echo ${DOCKER_TAG}
 
@@ -58,13 +58,13 @@ jobs:
 
       - docker/build:
           image: calgarymichael/finance-calc-backend
-          tag: $DOCKER_TAG
+          tag: $(</tmp/docker-tag.txt)
           path: ./finance-calc/build
           docker-context: ./finance-calc
 
       - docker/push:
           image: calgarymichael/finance-calc-backend
-          tag: $DOCKER_TAG
+          tag: $(</tmp/docker-tag.txt)
 
 
 workflows:
