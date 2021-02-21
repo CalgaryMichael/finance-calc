@@ -44,7 +44,7 @@ jobs:
       - run:
           name: Build Docker tag
           command: |
-            DOCKER_TAG="$CIRCLE_BRANCH,test"
+            DOCKER_TAG=$CIRCLE_BRANCH
             if [ "main" == $CIRCLE_BRANCH ]; then
               DOCKER_TAG="$DOCKER_TAG,latest"
             fi
@@ -65,6 +65,11 @@ jobs:
       - docker/push:
           image: calgarymichael/finance-calc-backend
           tag: $(</tmp/docker-tag.txt)
+          digest-path: /tmp/docker-digest.txt
+
+      - run:
+          name: Print digest
+          command: echo "Digest is: $(</tmp/digest.txt)"
 
 
 workflows:
