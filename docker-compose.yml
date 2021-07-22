@@ -1,12 +1,14 @@
 version: '3'
 services:
   finance-calc-api:
+    image: calgarymichael/finance-calc-backend
     build:
       context: finance-calc/
       dockerfile: build/Dockerfile
     ports:
       - "3000:3000"
   finance-calc-webapp:
+    image: calgarymichael/finance-calc-frontend
     build:
       context: webapp/
       dockerfile: Dockerfile
