@@ -1,25 +1,11 @@
 package api
 
 import (
-	"encoding/json"
-	"net/http"
+	"github.com/gorilla/mux"
 
-	scenario "financeCalc/pkg/scenario"
+	"financeCalc/api/controllers"
 )
 
-func projectScenario(w http.ResponseWriter, req *http.Request) {
-	scenarioRequest := NewScenarioRequest(req.Body)
-	projections := scenario.BuildProjections(
-		scenarioRequest.Scenario,
-		scenarioRequest.SortKey,
-		scenarioRequest.ReverseSort,
-	)
-
-	response := ScenarioResponse{
-		Projections: projections,
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
-	return
+func registerRoutes(r *mux.Router) {
+	r.HandleFunc("/scenario", requestLogger(controllers.CreateScenario)).Methods("POST")
 }
