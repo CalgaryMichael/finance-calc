@@ -27,6 +27,8 @@ func StartServer() {
 	r := mux.NewRouter()
 	registerRoutes(r)
 
+	r.Use(loggingMiddleware)
+
 	cors := handlers.CORS(
 		handlers.AllowedHeaders(allowedHeaders),
 		handlers.AllowedMethods(allowedMethods),

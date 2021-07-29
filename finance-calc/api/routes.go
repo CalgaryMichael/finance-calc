@@ -7,5 +7,5 @@ import (
 )
 
 func registerRoutes(r *mux.Router) {
-	r.HandleFunc("/scenario", requestLogger(controllers.CreateScenario)).Methods("POST")
+	r.HandleFunc("/scenario", controllers.CreateScenario).Methods("POST")
 }
