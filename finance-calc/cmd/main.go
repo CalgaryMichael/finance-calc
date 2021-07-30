@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "financeCalc/api"
+	api "financeCalc/api/server"
 )
 
 func main() {

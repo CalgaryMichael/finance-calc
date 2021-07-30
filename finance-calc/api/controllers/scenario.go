@@ -1,21 +1,17 @@
 package controllers
 
 import (
-	"encoding/json"
 	"io"
 	"net/http"
 
 	"financeCalc/api/models"
+	"financeCalc/api/utils"
 	"financeCalc/pkg/scenario"
 )
 
 func NewScenarioRequest(r io.ReadCloser) models.ScenarioRequest {
-	decoder := json.NewDecoder(r)
 	var scenarioRequest models.ScenarioRequest
-	err := decoder.Decode(&scenarioRequest)
-	if err != nil {
-		panic(err)
-	}
+	utils.BindJSON(r, &scenarioRequest)
 	return scenarioRequest
 }
 
@@ -27,11 +23,10 @@ func CreateScenario(w http.ResponseWriter, req *http.Request) {
 		scenarioRequest.ReverseSort,
 	)
 
-	response := models.ScenarioResponse{
+	resp := models.ScenarioResponse{
 		Projections: projections,
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	utils.JSONResponse(w, 200, resp)
 	return
 }
