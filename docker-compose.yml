@@ -1,5 +1,26 @@
 version: '3'
 services:
+  db:
+    image: postgres:13
+    ports:
+      - "5430:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: finance_calc
+    volumes:
+      # TODO: stick these in subfolders / `*` import them?
+      - ./database/0-users.sql:/docker-entrypoint-initdb.d/0-users.sql
+      - ./database/1-schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./database/2-user-table.sql:/docker-entrypoint-initdb.d/2-user-table.sql
+      - ./database/3-scenario-table.sql:/docker-entrypoint-initdb.d/3-scenario-table.sql
+      - ./database/4-debt-table.sql:/docker-entrypoint-initdb.d/4-debt-table.sql
+      - ./database/5-debt-payment-table.sql:/docker-entrypoint-initdb.d/5-debt-payment-table.sql
+      - ./database/6-debt-projection-table.sql:/docker-entrypoint-initdb.d/5-debt-projection-table.sql
+      - ./database/7-savings-account-table.sql:/docker-entrypoint-initdb.d/7-savings-account-table.sql
+      - ./database/8-savings-payment-table.sql:/docker-entrypoint-initdb.d/8-savings-payment-table.sql
+      - ./database/9-savings-projection-table.sql:/docker-entrypoint-initdb.d/9-savings-projection-table.sql
+
   finance-calc-api:
     image: calgarymichael/finance-calc-backend
     build:
@@ -7,6 +28,9 @@ services:
       dockerfile: build/Dockerfile
     ports:
       - "3000:3000"
+    depends_on:
+      - db
+
   finance-calc-webapp:
     image: calgarymichael/finance-calc-frontend
     build:
@@ -16,4 +40,3 @@ services:
       - "8080:5000"
     depends_on:
       - finance-calc-api
-
