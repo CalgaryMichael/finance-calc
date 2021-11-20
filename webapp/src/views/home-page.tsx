@@ -1,13 +1,12 @@
 import React from "react";
 
-import { Projection } from "../types.d";
+import { Projection, Scenario, SortKeys } from "../types.d";
 import ProjectionsTotalLineChart from "../components/projections-total-line-chart";
 
 
 type Props = {
-  sortKey: string,
-  reverse: boolean,
-  projections: Array<Projection>
+  scenario: Scenario,
+  projections: Array<Projection>,
   updateSortKey: (sortKey: string) => void,
   updateSortDirection: (reverse: boolean) => void,
   updateScenario: (scenario: any) => void,
@@ -35,11 +34,11 @@ const HomePage: React.FC = (props: Props) => {
   return (
     <div>
       <div style={{display: "flex"}}>
-        <select name="sortKey" value={props.sortKey} onChange={updateSortKey}>
-          <option value="DebtName">Debt Name</option>
-          <option value="Payments">Payments</option>
-          <option value="DebtTotal">Debt Total</option>
-          <option value="InterestRate">Interest Rate</option>
+        <select name="sortKey" value={props.scenario.sortKey} onChange={updateSortKey}>
+          <option value={SortKeys.DebtName}>Debt Name</option>
+          <option value={SortKeys.Payments}>Payments</option>
+          <option value={SortKeys.DebtTotal}>Debt Total</option>
+          <option value={SortKeys.InterestRate}>Interest Rate</option>
         </select>
 
         <input
@@ -47,7 +46,7 @@ const HomePage: React.FC = (props: Props) => {
           id="sort-direction-asc"
           name="sort-direction"
           value={false}
-          checked={props.reverse === false}
+          checked={props.scenario.reverse === false}
           onChange={updateSortDirection}
         />
         <label htmlFor="sort-direction-asc">ASC</label>
@@ -57,7 +56,7 @@ const HomePage: React.FC = (props: Props) => {
           id="sort-direction-desc"
           name="sort-direction"
           value={true}
-          checked={props.reverse === true}
+          checked={props.scenario.reverse === true}
           onChange={updateSortDirection}
         />
         <label htmlFor="sort-direction-desc">DESC</label>

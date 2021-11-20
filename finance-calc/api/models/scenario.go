@@ -5,9 +5,7 @@ import (
 )
 
 type ScenarioRequest struct {
-	Scenario    scenarioModels.Scenario `json:"scenario"`
-	SortKey     string                  `json:"sortKey"`
-	ReverseSort bool                    `json:"reverseSort"`
+	Scenario scenarioModels.Scenario `json:"scenario"`
 }
 
 type ScenarioResponse struct {

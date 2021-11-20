@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from "react-redux"
 import { Dispatch } from "redux"
 
 import HomePage from "./views/home-page";
-import { State } from "./types.d";
+import { Scenario, State } from "./types.d";
 import * as Actions from "./store/action-creators";
 
 const App: React.FC = (props) => {
-  const sortKey: string = useSelector((state: State) => state.sortKey);
-  const reverse: boolean = useSelector((state: State) => state.reverse);
+  const scenario: Scenario = useSelector((state: State) => state.scenario);
   const projections: readonly object[] = useSelector((state: State) => state.projections);
 
   const dispatch: Dispatch<any> = useDispatch();
@@ -35,8 +34,7 @@ const App: React.FC = (props) => {
 
   return (
     <HomePage
-      sortKey={sortKey}
-      reverse={reverse}
+      scenario={scenario}
       projections={projections}
       updateSortKey={updateSortKey}
       updateSortDirection={updateSortDirection}

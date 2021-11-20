@@ -10,10 +10,10 @@ import (
 	"time"
 )
 
-func BuildProjections(scenario models.Scenario, key string, reverse bool) []*models.Projection {
+func BuildProjections(scenario models.Scenario) []*models.Projection {
 	projections := make([]*models.Projection, 0, 240)
 
-	debts := debt.SortDebts(scenario.Debts, key, reverse)
+	debts := debt.SortDebts(scenario.Debts, scenario.SortKey, scenario.ReverseSort)
 	savingsAccounts := scenario.SavingsAccounts
 
 	i := 0

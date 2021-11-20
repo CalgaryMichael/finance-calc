@@ -20,19 +20,19 @@ export function updateSortDirection(reverse: boolean) {
   }
 }
 
-export function updateScenario(scenario: any) {
+export function updateScenario(scenario: string) {
   return (dispatch: DispatchType) => {
     dispatch({
       type: ActionType.UPDATE_SCENARIO,
-      payload: { scenario: scenario as Scenario }
+      payload: (scenario ? JSON.parse(scenario) : {}) as Scenario
     });
   };
 }
 
 export function saveScenario() {
   return (dispatch: DispatchType, getState: () => State) => {
-    const { reverse, scenario, sortKey } = getState();
-    external.projectScenario(scenario, sortKey, reverse)
+    const { scenario } = getState();
+    external.projectScenario(scenario)
       .then((ret) => {
         dispatch({
           type: ActionType.SAVE_PROJECTIONS,

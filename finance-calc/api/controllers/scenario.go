@@ -19,8 +19,6 @@ func CreateScenario(w http.ResponseWriter, req *http.Request) {
 	scenarioRequest := NewScenarioRequest(req.Body)
 	projections := scenario.BuildProjections(
 		scenarioRequest.Scenario,
-		scenarioRequest.SortKey,
-		scenarioRequest.ReverseSort,
 	)
 
 	resp := models.ScenarioResponse{
