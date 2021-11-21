@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"financeCalc/api/models"
+	"financeCalc/api/orchestrators"
 	"financeCalc/api/utils"
-	"financeCalc/pkg/scenario"
 )
 
 func NewScenarioRequest(r io.ReadCloser) models.ScenarioRequest {
@@ -17,9 +17,7 @@ func NewScenarioRequest(r io.ReadCloser) models.ScenarioRequest {
 
 func CreateScenario(w http.ResponseWriter, req *http.Request) {
 	scenarioRequest := NewScenarioRequest(req.Body)
-	projections := scenario.BuildProjections(
-		scenarioRequest.Scenario,
-	)
+	projections := orchestrators.CreateScenario(scenarioRequest)
 
 	resp := models.ScenarioResponse{
 		Projections: projections,

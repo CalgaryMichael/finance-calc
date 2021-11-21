@@ -15,11 +15,15 @@ var allowedHeaders []string = []string{
 }
 
 var allowedMethods []string = []string{
-	"GET",
-	"POST",
-	"PUT",
-	"HEAD",
-	"OPTIONS",
+	http.MethodGet,
+	http.MethodPost,
+	http.MethodPut,
+	http.MethodHead,
+	http.MethodOptions,
+}
+
+var allowedOrigins []string = []string{
+	"http://localhost:8080",
 }
 
 func StartServer() {
@@ -30,9 +34,9 @@ func StartServer() {
 	r.Use(loggingMiddleware)
 
 	cors := handlers.CORS(
+		handlers.AllowedOrigins(allowedOrigins),
 		handlers.AllowedHeaders(allowedHeaders),
 		handlers.AllowedMethods(allowedMethods),
-		handlers.AllowedOrigins([]string{"*"}),
 	)
 	log.Fatal(http.ListenAndServe(":3000", cors(r)))
 }

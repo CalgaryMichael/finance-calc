@@ -11,9 +11,29 @@ import (
 	"financeCalc/api/utils"
 )
 
+var DB *sql.DB
+
 func Connect() {
+	var err error
+
 	log.Println("Starting database connection...")
 
+	// open database
+	DB, err = sql.Open("postgres", GetDatabaseConnectionString())
+	utils.CheckError(err)
+
+	// initial ping to ensure that we are all good!
+	err = DB.Ping()
+	utils.CheckError(err)
+
+	log.Println("Database connected!")
+}
+
+func GetDbInstance() *sql.DB {
+	return DB
+}
+
+func GetDatabaseConnectionString() string {
 	var (
 		host     = os.Getenv("DB_HOST")
 		port     = os.Getenv("DB_PORT")
@@ -22,16 +42,11 @@ func Connect() {
 		dbname   = os.Getenv("DB_NAME")
 	)
 
-	// connection string
-	psqlconn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-
-	// open database
-	db, err := sql.Open("postgres", psqlconn)
-	utils.CheckError(err)
-
-	// initial ping to ensure that we are all good!
-	err = db.Ping()
-	utils.CheckError(err)
-
-	log.Println("Database connected!")
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		host,
+		port,
+		user,
+		password,
+		dbname,
+	)
 }

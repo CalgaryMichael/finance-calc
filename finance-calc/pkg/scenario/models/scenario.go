@@ -10,4 +10,6 @@ type Scenario struct {
 	StartDate       time.Time                       `json:"startDate"`
 	Debts           []*debtModels.Debt              `json:"debts"`
 	SavingsAccounts []*savingsModels.SavingsAccount `json:"savings"`
+	SortKey         string                          `json:"sortKey"`
+	ReverseSort     bool                            `json:"reverseSort"`
 }
