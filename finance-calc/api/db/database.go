@@ -1,17 +1,17 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
 	"financeCalc/api/utils"
 )
 
-var DB *sql.DB
+var DB *sqlx.DB
 
 func Connect() {
 	var err error
@@ -19,7 +19,7 @@ func Connect() {
 	log.Println("Starting database connection...")
 
 	// open database
-	DB, err = sql.Open("postgres", GetDatabaseConnectionString())
+	DB, err = sqlx.Open("postgres", GetDatabaseConnectionString())
 	utils.CheckError(err)
 
 	// initial ping to ensure that we are all good!
@@ -29,7 +29,7 @@ func Connect() {
 	log.Println("Database connected!")
 }
 
-func GetDbInstance() *sql.DB {
+func GetDbInstance() *sqlx.DB {
 	return DB
 }
 
