@@ -6,8 +6,9 @@ import (
 	"github.com/gorilla/mux"
 
 	"financeCalc/api/controllers"
+	"financeCalc/api/utils"
 )
 
 func registerRoutes(r *mux.Router) {
-	r.HandleFunc("/scenario", controllers.CreateScenario).Methods(http.MethodPost)
+	r.HandleFunc("/scenario", utils.HandleErrors(controllers.CreateScenario)).Methods(http.MethodPost)
 }

@@ -1,4 +1,4 @@
-CREATE TABLE finance.debt_payment(
+CREATE TABLE finance.debt_payment (
 	id		SERIAL PRIMARY KEY,
 	debt_id		BIGINT REFERENCES finance.debt(id),
 	amount		NUMERIC(14,2) NOT NULL,
