@@ -3,6 +3,7 @@ package savings
 import "time"
 
 type SavingsAccount struct {
+	Id             int               `json:"id"`
 	Name           string            `json:"name"`
 	APY            float64           `json:"apy"`
 	InitialCapital float64           `json:"initialCapital"`

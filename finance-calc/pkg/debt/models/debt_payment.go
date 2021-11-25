@@ -3,6 +3,7 @@ package debt
 import "time"
 
 type DebtPayment struct {
+	Id        int        `json:"id"`
 	Amount    float64    `json:"amount"`
 	CarryOver bool       `json:"carryOver"`
 	StartDate *time.Time `json:"startDate"`

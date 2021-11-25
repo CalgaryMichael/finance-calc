@@ -1,6 +1,7 @@
 package debt
 
 type DebtProjection struct {
+	Id           int `json:"id"`
 	Debt         *Debt
 	DebtTotal    float64 `json:"debtTotal"`
 	PaymentSum   float64 `json:"paymentSum"`

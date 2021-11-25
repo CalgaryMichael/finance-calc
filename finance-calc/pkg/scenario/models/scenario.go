@@ -7,6 +7,7 @@ import (
 )
 
 type Scenario struct {
+	Id              int                             `json:"id"`
 	StartDate       time.Time                       `json:"startDate"`
 	Debts           []*debtModels.Debt              `json:"debts"`
 	SavingsAccounts []*savingsModels.SavingsAccount `json:"savings"`

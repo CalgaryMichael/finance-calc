@@ -3,6 +3,7 @@ package debt
 import "time"
 
 type Debt struct {
+	Id           int            `json:"id"`
 	DebtName     string         `json:"name"`
 	DebtTotal    float64        `json:"total"`
 	Payments     []*DebtPayment `json:"payments"`
