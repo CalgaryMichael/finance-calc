@@ -1,6 +1,9 @@
 package daos
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 
 	"financeCalc/api/utils"
@@ -23,18 +26,9 @@ func CreateDebt(tx *sqlx.Tx, scenarioId int, debt *debtModels.Debt) int {
 	rows, err := tx.NamedQuery(statement, params)
 	utils.CheckError(err)
 
-	var lastInsertedId int
-	for rows.Next() {
-		err := rows.Scan(&lastInsertedId)
-		utils.CheckError(err)
-
-		// we are only trying to insert one value
-		// but we will break after the first result just in case
-		break
+	id, ok := GetInsertedId(rows)
+	if !ok {
+		panic(errors.New(fmt.Sprintf("Unable to insert Debt \"%s\"", debt.DebtName)))
 	}
-
-	// manually close since we are not necessarily fully iterating over every row
-	rows.Close()
-
-	return lastInsertedId
+	return id
 }
