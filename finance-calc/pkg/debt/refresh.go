@@ -12,6 +12,7 @@ func RefreshDebts(projections []*models.DebtProjection) []*models.Debt {
 
 func copyDebt(projection *models.DebtProjection) *models.Debt {
 	return &models.Debt{
+		Id:           projection.Debt.Id,
 		DebtName:     projection.Debt.DebtName,
 		DebtTotal:    projection.DebtTotal,
 		Payments:     projection.Debt.Payments,

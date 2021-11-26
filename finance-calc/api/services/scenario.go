@@ -8,5 +8,6 @@ import (
 )
 
 func CreateScenario(tx *sqlx.Tx, userId int, scenario scenarioModels.Scenario) int {
-	return daos.CreateScenario(tx, userId, scenario)
+	scenario.Id = daos.CreateScenario(tx, userId, scenario)
+	return scenario.Id
 }
