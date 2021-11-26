@@ -2,14 +2,12 @@ package debt
 
 import (
 	models "financeCalc/pkg/debt/models"
-	"log"
 	"math"
 	"time"
 )
 
 // Calculate debt reduction cycle for the amount of months between the provided dates
 func ProjectDebtsForMonth(debts []*models.Debt, endDate time.Time) []*models.DebtProjection {
-	log.Println("Building debt projections for month...")
 	projections := make([]*models.DebtProjection, len(debts))
 	for i, debt := range debts {
 		carryOverSum := GetCarryOverSum(projections)

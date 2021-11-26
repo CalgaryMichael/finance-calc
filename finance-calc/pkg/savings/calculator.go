@@ -4,7 +4,6 @@ import (
 	debt "financeCalc/pkg/debt"
 	debtModels "financeCalc/pkg/debt/models"
 	models "financeCalc/pkg/savings/models"
-	"log"
 	"time"
 )
 
@@ -13,8 +12,6 @@ func ProjectSavingsForMonth(
 	debtProjections []*debtModels.DebtProjection,
 	currentDate time.Time,
 ) []*models.SavingsProjection {
-	log.Println("Building savings projections for month...")
-
 	projections := make([]*models.SavingsProjection, len(accounts))
 	for i, account := range accounts {
 		carryOverSum := 0.00

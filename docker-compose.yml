@@ -21,7 +21,7 @@ services:
       - ./database/8-savings-payment-table.sql:/docker-entrypoint-initdb.d/8-savings-payment-table.sql
       - ./database/9-savings-projection-table.sql:/docker-entrypoint-initdb.d/9-savings-projection-table.sql
 
-  finance-calc-api:
+  api:
     image: calgarymichael/finance-calc-backend
     build:
       context: finance-calc/
@@ -37,7 +37,7 @@ services:
     depends_on:
       - db
 
-  finance-calc-webapp:
+  webapp:
     image: calgarymichael/finance-calc-frontend
     build:
       context: webapp/
@@ -45,4 +45,4 @@ services:
     ports:
       - "8080:5000"
     depends_on:
-      - finance-calc-api
+      - api

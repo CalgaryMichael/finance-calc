@@ -14,10 +14,12 @@ func Test_BuildProjections__DebtSettled(t *testing.T) {
 	savingsAccount := buildSavingsAccount(1000.00, 100.00)
 	scenario := models.Scenario{
 		StartDate:       time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+		SortKey:         "DebtTotal",
+		ReverseSort:     false,
 		Debts:           []*debtModels.Debt{debt},
 		SavingsAccounts: []*savingsModels.SavingsAccount{savingsAccount},
 	}
-	actual := BuildProjections(scenario, "DebtTotal", false)
+	actual := BuildProjections(scenario)
 
 	expected := []*models.Projection{
 		&models.Projection{
@@ -106,10 +108,12 @@ func Test_BuildProjections__DebtSettled__WaterfallCarryOver(t *testing.T) {
 	savingsAccount := buildSavingsAccount(1000.00, 100.00)
 	scenario := models.Scenario{
 		StartDate:       time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+		SortKey:         "DebtTotal",
+		ReverseSort:     false,
 		Debts:           []*debtModels.Debt{debt1, debt2, debt3},
 		SavingsAccounts: []*savingsModels.SavingsAccount{savingsAccount},
 	}
-	actual := BuildProjections(scenario, "DebtTotal", false)
+	actual := BuildProjections(scenario)
 
 	expected := []*models.Projection{
 		&models.Projection{
@@ -335,10 +339,12 @@ func Test_BuildProjections__DebtSettled__SavingsCarryOver(t *testing.T) {
 	savingsAccount := buildSavingsAccount(1000.00, 100.00)
 	scenario := models.Scenario{
 		StartDate:       time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
+		SortKey:         "DebtTotal",
+		ReverseSort:     false,
 		Debts:           []*debtModels.Debt{debt1, debt2},
 		SavingsAccounts: []*savingsModels.SavingsAccount{savingsAccount},
 	}
-	actual := BuildProjections(scenario, "DebtTotal", false)
+	actual := BuildProjections(scenario)
 
 	expected := []*models.Projection{
 		&models.Projection{

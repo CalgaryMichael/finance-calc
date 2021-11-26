@@ -11,6 +11,7 @@ import (
 )
 
 func BuildProjections(scenario models.Scenario) []*models.Projection {
+	log.Println("Building projections...")
 	projections := make([]*models.Projection, 0, 240)
 
 	debts := debt.SortDebts(scenario.Debts, scenario.SortKey, scenario.ReverseSort)
@@ -43,8 +44,6 @@ func buildProjection(
 	debts []*debtModels.Debt,
 	savingsAccounts []*savingsModels.SavingsAccount,
 ) *models.Projection {
-	log.Printf("Building projections for month: %v\n", effectiveDate.Format(time.RFC3339))
-
 	debtProjections := debt.ProjectDebtsForMonth(debts, effectiveDate)
 	savingsProjections := savings.ProjectSavingsForMonth(savingsAccounts, debtProjections, effectiveDate)
 
