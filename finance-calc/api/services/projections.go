@@ -9,6 +9,6 @@ import (
 func CreateProjections(tx *sqlx.Tx, projections []*scenarioModels.Projection) {
 	for _, projection := range projections {
 		CreateDebtProjections(tx, projection.EffectiveDate, projection.DebtProjections)
-		// TODO: persist SavingsProjections
+		CreateSavingsProjections(tx, projection.EffectiveDate, projection.SavingsProjections)
 	}
 }

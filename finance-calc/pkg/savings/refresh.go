@@ -12,6 +12,7 @@ func RefreshSavingsAccounts(projections []*models.SavingsProjection) []*models.S
 
 func copySavingsAccount(projection *models.SavingsProjection) *models.SavingsAccount {
 	return &models.SavingsAccount{
+		Id:             projection.SavingsAccount.Id,
 		Name:           projection.SavingsAccount.Name,
 		APY:            projection.SavingsAccount.APY,
 		InitialCapital: projection.SavingsTotal,

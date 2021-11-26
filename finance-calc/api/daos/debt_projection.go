@@ -2,7 +2,6 @@ package daos
 
 import (
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -18,8 +17,6 @@ func buildBulkInsertDebtProjectionStatement(effectiveDate time.Time, projections
 	}
 	inserts := make([]string, 0, len(projections))
 	for i, projection := range projections {
-		log.Println(projection.Debt.DebtName)
-		log.Println(projection.Debt.Id)
 		params[fmt.Sprintf("debtId%d", i)] = projection.Debt.Id
 		params[fmt.Sprintf("total%d", i)] = projection.DebtTotal
 		params[fmt.Sprintf("paymentSum%d", i)] = projection.PaymentSum
