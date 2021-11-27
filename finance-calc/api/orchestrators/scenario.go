@@ -13,9 +13,10 @@ import (
 
 func CreateScenario(scenarioRequest models.ScenarioRequest) int {
 	log.Println("Saving scenario info to DB...")
+	var scenarioId int
 	db.WithTransaction(func(tx *sqlx.Tx) {
 		// TODO: actually capture the user id for the request
-		scenarioId := services.CreateScenario(tx, 0, scenarioRequest.Scenario)
+		scenarioId = services.CreateScenario(tx, 0, scenarioRequest.Scenario)
 
 		var wg sync.WaitGroup
 		wg.Add(2)
@@ -34,5 +35,5 @@ func CreateScenario(scenarioRequest models.ScenarioRequest) int {
 	})
 
 	CreateProjections(scenarioRequest)
-	return scenarioRequest.Scenario.Id
+	return scenarioId
 }

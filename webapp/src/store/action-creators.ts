@@ -32,7 +32,17 @@ export function updateScenario(scenario: string) {
 export function saveScenario() {
   return (dispatch: DispatchType, getState: () => State) => {
     const { scenario } = getState();
-    external.projectScenario(scenario)
+    external.saveScenario(scenario)
+      .then((ret) => {
+        dispatch(getProjections(ret.data.scenarioId));
+      })
+      .catch((e) => console.log(e));
+  }
+}
+
+export function getProjections(scenarioId: number) {
+  return (dispatch: DispatchType, _: () => State) => {
+    external.getProjections(scenarioId)
       .then((ret) => {
         dispatch({
           type: ActionType.SAVE_PROJECTIONS,
@@ -42,6 +52,5 @@ export function saveScenario() {
         });
       })
       .catch((e) => console.log(e));
-  };
+  }
 }
-
