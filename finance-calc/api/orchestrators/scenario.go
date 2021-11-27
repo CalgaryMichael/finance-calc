@@ -9,10 +9,9 @@ import (
 	"financeCalc/api/db"
 	"financeCalc/api/models"
 	"financeCalc/api/services"
-	scenarioModels "financeCalc/pkg/scenario/models"
 )
 
-func CreateScenario(scenarioRequest models.ScenarioRequest) []*scenarioModels.Projection {
+func CreateScenario(scenarioRequest models.ScenarioRequest) int {
 	log.Println("Saving scenario info to DB...")
 	db.WithTransaction(func(tx *sqlx.Tx) {
 		// TODO: actually capture the user id for the request
@@ -34,5 +33,6 @@ func CreateScenario(scenarioRequest models.ScenarioRequest) []*scenarioModels.Pr
 		wg.Wait()
 	})
 
-	return CreateProjections(scenarioRequest)
+	CreateProjections(scenarioRequest)
+	return scenarioRequest.Scenario.Id
 }

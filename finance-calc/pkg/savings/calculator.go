@@ -27,6 +27,7 @@ func buildProjection(account *models.SavingsAccount, currentDate time.Time, carr
 	payment := sumPayment(account, currentDate, carryOverSum)
 	return &models.SavingsProjection{
 		SavingsAccount: account,
+		EffectiveDate:  currentDate,
 		SavingsTotal:   account.InitialCapital + payment,
 		PaymentSum:     payment,
 	}

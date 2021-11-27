@@ -7,7 +7,6 @@ import (
 )
 
 type Projection struct {
-	Id                 int                                `json:"id"`
 	EffectiveDate      time.Time                          `json:"effectiveDate"`
 	DebtProjections    []*debtModels.DebtProjection       `json:"debtProjections"`
 	SavingsProjections []*savingsModels.SavingsProjection `json:"savingsProjections"`

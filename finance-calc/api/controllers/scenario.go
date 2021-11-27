@@ -17,10 +17,10 @@ func NewScenarioRequest(r io.ReadCloser) models.ScenarioRequest {
 
 func CreateScenario(w http.ResponseWriter, req *http.Request) {
 	scenarioRequest := NewScenarioRequest(req.Body)
-	projections := orchestrators.CreateScenario(scenarioRequest)
+	scenarioId := orchestrators.CreateScenario(scenarioRequest)
 
 	resp := models.ScenarioResponse{
-		Projections: projections,
+		ScenarioId: scenarioId,
 	}
 
 	utils.JSONResponse(w, 200, resp)

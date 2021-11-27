@@ -20,10 +20,11 @@ func buildProjection(debt *models.Debt, currentDate time.Time, carryOverSum floa
 	paymentSum := debt.SumActivePayments(currentDate) + carryOverSum
 	debtTotal, remainder := subtractPaymentSum(debt.DebtTotal, paymentSum, debt.InterestRate)
 	return &models.DebtProjection{
-		Debt:         debt,
-		DebtTotal:    debtTotal,
-		PaymentSum:   paymentSum - remainder,
-		UnappliedSum: remainder,
+		Debt:          debt,
+		EffectiveDate: currentDate,
+		DebtTotal:     debtTotal,
+		PaymentSum:    paymentSum - remainder,
+		UnappliedSum:  remainder,
 	}
 }
 

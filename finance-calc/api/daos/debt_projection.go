@@ -36,3 +36,44 @@ func CreateDebtProjections(tx *sqlx.Tx, effectiveDate time.Time, projections []*
 	_, err := tx.NamedExec(statement, params)
 	utils.CheckError(err)
 }
+
+func GetDebtProjectionsForScenario(tx *sqlx.Tx, scenarioId int) []*debtModels.DebtProjection {
+	statement := `
+		SELECT
+			d.id,
+			d.name,
+			d.total AS debt_total,
+			projection.effective_date,
+			projection.total,
+			projection.payment_sum,
+			projection.unapplied_sum
+		FROM finance.debt_projection projection
+		JOIN finance.debt d ON d.id = projection.debt_id
+		JOIN finance.scenario s ON s.id = d.scenario_id
+		WHERE s.id = :scenarioId
+	`
+	params := Params{
+		"scenarioId": scenarioId,
+	}
+	rows, err := tx.NamedQuery(statement, params)
+	utils.CheckError(err)
+
+	var projections []*debtModels.DebtProjection
+	for rows.Next() {
+		var debt debtModels.Debt
+		var projection debtModels.DebtProjection
+		err := rows.Scan(
+			&debt.Id,
+			&debt.DebtName,
+			&debt.DebtTotal,
+			&projection.EffectiveDate,
+			&projection.DebtTotal,
+			&projection.PaymentSum,
+			&projection.UnappliedSum,
+		)
+		utils.CheckError(err)
+		projection.Debt = &debt
+		projections = append(projections, &projection)
+	}
+	return projections
+}

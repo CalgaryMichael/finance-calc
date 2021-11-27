@@ -9,5 +9,5 @@ type ScenarioRequest struct {
 }
 
 type ScenarioResponse struct {
-	Projections []*scenarioModels.Projection `json:"projections"`
+	ScenarioId int `json:"scenarioId"`
 }
