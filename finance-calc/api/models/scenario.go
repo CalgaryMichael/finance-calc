@@ -11,3 +11,11 @@ type ScenarioRequest struct {
 type ScenarioResponse struct {
 	ScenarioId int `json:"scenarioId"`
 }
+
+type GetScenariosRequest struct {
+	UserId int `json:"userId"`
+}
+
+type GetScenariosResponse struct {
+	Scenarios []*scenarioModels.Scenario `json:"scenarios"`
+}

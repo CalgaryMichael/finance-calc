@@ -20,6 +20,7 @@ services:
       - ./database/7-savings-account-table.sql:/docker-entrypoint-initdb.d/7-savings-account-table.sql
       - ./database/8-savings-payment-table.sql:/docker-entrypoint-initdb.d/8-savings-payment-table.sql
       - ./database/9-savings-projection-table.sql:/docker-entrypoint-initdb.d/9-savings-projection-table.sql
+      - ./database/seed/0-users-seed-data.sql:/docker-entrypoint-initdb.d/999-users-seed-data.sql
 
   api:
     image: calgarymichael/finance-calc-backend

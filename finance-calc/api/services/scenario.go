@@ -11,3 +11,7 @@ func CreateScenario(tx *sqlx.Tx, userId int, scenario scenarioModels.Scenario) i
 	scenario.Id = daos.CreateScenario(tx, userId, scenario)
 	return scenario.Id
 }
+
+func GetScenarios(tx *sqlx.Tx, userId int) []*scenarioModels.Scenario {
+	return daos.GetScenarios(tx, userId)
+}

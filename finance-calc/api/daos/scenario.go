@@ -1,6 +1,9 @@
 package daos
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 
 	"financeCalc/api/utils"
@@ -9,12 +12,13 @@ import (
 
 func CreateScenario(tx *sqlx.Tx, userId int, scenario scenarioModels.Scenario) int {
 	statement := `
-		INSERT INTO finance.scenario(name, start_date, sort_key, reverse_sort)
-		VALUES (:scenario, :startDate, :sortKey, :reverseSort)
+		INSERT INTO finance.scenario(user_id, name, start_date, sort_key, reverse_sort)
+		VALUES (:userId, :name, :startDate, :sortKey, :reverseSort)
 		RETURNING id
 	`
 	params := Params{
-		"scenario":    "scenario",
+		"userId":      userId,
+		"name":        "scenario",
 		"startDate":   scenario.StartDate,
 		"sortKey":     scenario.SortKey,
 		"reverseSort": scenario.ReverseSort,
@@ -22,18 +26,40 @@ func CreateScenario(tx *sqlx.Tx, userId int, scenario scenarioModels.Scenario) i
 	rows, err := tx.NamedQuery(statement, params)
 	utils.CheckError(err)
 
-	var insertedId int
-	for rows.Next() {
-		err := rows.Scan(&insertedId)
-		utils.CheckError(err)
-
-		// we are only trying to insert one value
-		// but we will break after the first result just in case
-		break
+	id, ok := GetInsertedId(rows)
+	if !ok {
+		panic(errors.New(fmt.Sprintf("Unable to insert Scenario \"%d\"", userId)))
 	}
+	return id
+}
 
-	// manually close since we are not necessarily fully iterating over every row
-	rows.Close()
+func GetScenarios(tx *sqlx.Tx, userId int) []*scenarioModels.Scenario {
+	statement := `
+		SELECT
+			id,
+			start_date,
+			sort_key,
+			reverse_sort
+		FROM finance.scenario
+		WHERE scenario.user_id = :userId
+	`
+	params := Params{
+		"userId": userId,
+	}
+	rows, err := tx.NamedQuery(statement, params)
+	utils.CheckError(err)
 
-	return insertedId
+	var scenarios []*scenarioModels.Scenario
+	for rows.Next() {
+		var scenario scenarioModels.Scenario
+		err := rows.Scan(
+			&scenario.Id,
+			&scenario.StartDate,
+			&scenario.SortKey,
+			&scenario.ReverseSort,
+		)
+		utils.CheckError(err)
+		scenarios = append(scenarios, &scenario)
+	}
+	return scenarios
 }
