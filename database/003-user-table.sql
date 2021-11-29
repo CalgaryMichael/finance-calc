@@ -3,7 +3,7 @@ CREATE TABLE auth."user" (
 	first_name	TEXT,
 	last_name	TEXT,
 	email		TEXT,
-	password 	TEXT,
+	password 	BYTEA,
 	created 	TIMESTAMP NOT NULL DEFAULT now()
 );
 
